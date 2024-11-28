@@ -19,7 +19,7 @@ const InitialValues = {
   giftCardsRedeem: 0,
   totalOrderValueLift: 0,
   loyaltyPointsEarn: 0,
-  loyaltyPointsRedeem: 9,
+  loyaltyPointsRedeem: 0,
   orderPlacedUsingLoyaltyPoints: 0,
   totalOrders: 0,
 };

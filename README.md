@@ -1,7 +1,8 @@
 ## INCREMENT STATISTIC
 
 - Create/Update one JSON file to manage statistic count
-  -> utils -> statistic.json
+  -> utils -> statistic.json (For dev)
+  -> utils -> prod.statistic.json (For Production)
 
   ```
   {

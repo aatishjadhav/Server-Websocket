@@ -2,6 +2,7 @@
 
 const { InitialValues } = require("../utils/constants");
 const {
+  getFilename,
   getUpdateValues,
   getInitialData,
   totalIntervalsIn96Hours,
@@ -13,6 +14,7 @@ const updateIntervalMs = 60 * 1000;
 
 module.exports = (server) => {
   const wss = new WebSocketServer({ server });
+  getFilename();
 
   // Broadcast data to clients
   const broadcastData = () => {

@@ -1,12 +1,25 @@
 `use strict`;
 
-const { MaxTargetValue } = require("./constants");
+const { MaxTargetValue, InitialValues } = require("./constants");
 const fs = require("fs");
 const numberFormatter = new Intl.NumberFormat("en-US");
 
 const totalDurationHours = 96;
 const randomVariation = Math.floor(Math.random() * (10 - -10 + 1)) + -10;
 const totalIntervalsIn96Hours = totalDurationHours * 60 + randomVariation;
+
+const getFilename = () => {
+  const filename =
+    process.env.NODE_ENV == "dev" ? "/statistic.json" : "/prod.statistic.json";
+
+  if (!fs.existsSync(__dirname + filename)) {
+    fs.writeFileSync(
+      __dirname + filename,
+      JSON.stringify(InitialValues),
+      "utf8"
+    );
+  } 
+};
 
 const getFormattedData = (data) => {
   return {
@@ -43,8 +56,9 @@ const getIncValue = (maxValue, interval, percentage) => {
 };
 
 const getUpdateValues = () => {
+  const filename = getFilename();
   const data = JSON.parse(
-    fs.readFileSync(__dirname + "/statistic.json", {
+    fs.readFileSync(__dirname + filename, {
       encoding: "utf8",
     })
   );
@@ -131,17 +145,22 @@ const getUpdateValues = () => {
     totalOrders,
   };
 
-  fs.writeFileSync(__dirname + "/statistic.json", JSON.stringify(objToSave));
+  fs.writeFileSync(__dirname + filename, JSON.stringify(objToSave));
   return getFormattedData(objToSave);
 };
 
 const getInitialData = () => {
   const data = JSON.parse(
-    fs.readFileSync(__dirname + "/statistic.json", {
+    fs.readFileSync(__dirname + getFilename(), {
       encoding: "utf8",
     })
   );
   return getFormattedData(data);
 };
 
-module.exports = { getInitialData, getUpdateValues, totalIntervalsIn96Hours };
+module.exports = {
+  getFilename,
+  getInitialData,
+  getUpdateValues,
+  totalIntervalsIn96Hours,
+};
