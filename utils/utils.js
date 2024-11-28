@@ -19,6 +19,7 @@ const getFilename = () => {
       "utf8"
     );
   } 
+  return filename;
 };
 
 const getFormattedData = (data) => {
